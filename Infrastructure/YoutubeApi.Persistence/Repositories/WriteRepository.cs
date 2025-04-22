@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YoutubeApi.Application.Interfaces.Repositories;
 using YoutubeApi.Domain.Common;
+using YoutubeApi.Persistence.Context;
 
 namespace YoutubeApi.Persistence.Repositories
 {
     public class WriteRepository<T> : IWriteRepository<T> where T : class, IEntityBase, new()
     {
-        private readonly DbContext dbContext;
+        private readonly AppDbContext dbContext;
 
-        public WriteRepository(DbContext dbContext)
+        public WriteRepository(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -35,5 +36,9 @@ namespace YoutubeApi.Persistence.Repositories
             await Task.Run(() => Table.Remove(entity));
         }
 
+        public async Task HardDeleteRangeAsync(IList<T> entities)
+        {
+            await Task.Run(() => Table.RemoveRange(entities));
+        }
     }
 }

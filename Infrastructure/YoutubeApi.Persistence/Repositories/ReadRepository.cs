@@ -3,14 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using YoutubeApi.Application.Interfaces.Repositories;
 using YoutubeApi.Domain.Common;
+using YoutubeApi.Persistence.Context;
 
 namespace YoutubeApi.Persistence.Repositories
 {
     public class ReadRepository<T> : IReadRepository<T> where T : class, IEntityBase, new()
     {
-        private readonly DbContext dbContext;
+        private readonly AppDbContext dbContext;
 
-        public ReadRepository(DbContext dbContext)
+        public ReadRepository(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
